@@ -135,6 +135,13 @@ exuberant-ctags|plugin-example|setting to use Exuberant Ctags plug-in parser:\
 	:gtags_parser=VHDL\:@prefix@/lib/gtags/exuberant-ctags.la:\
 	:gtags_parser=Vim\:@prefix@/lib/gtags/exuberant-ctags.la:\
 	:gtags_parser=YACC\:@prefix@/lib/gtags/exuberant-ctags.la:
+#
+# Plug-in parser to use Hasktagas
+#
+hasktags|setting to use Hasktags plug-in parser:\
+	:tc=common:\
+	:langmap=Haskell\:.hs:\
+	:gtags_parser=Haskell\:@prefix@/lib/gtags/hasktags.la:
 #---------------------------------------------------------------------
 # Configuration for htags(1)
 # Let's paint hypertext with your favorite colors!

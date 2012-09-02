@@ -271,6 +271,38 @@ AC_DEFINE_UNQUOTED(EXUBERANT_CTAGS, "$EXUBERANT_CTAGS", [Exuberant Ctags program
 AC_SUBST(EXUBERANT_CTAGS)
 
 dnl
+dnl for gtags.conf and function layer plugin parser sample.
+dnl
+AC_MSG_CHECKING(for hasktags program)
+AC_ARG_WITH(hasktags,
+[  --with-hasktags=PROGRAM  specify Hasktags program ],
+[
+	HASKTAGS="$withval"
+        if test "$withval" = 'no'; then
+                AC_MSG_RESULT(no)
+	else
+                AC_MSG_RESULT([using $HASKTAGS])
+	fi
+],
+[
+	for d in `echo $PATH | sed -e 's/^:/.:/' -e 's/::/:.:/g' -e 's/:$/:./' -e 's/:/ /g'`
+	do
+		if test -x $d/hasktags; then
+			withval="$d/hasktags"
+			break
+		fi
+	done
+	if test "$withval" = ''; then
+		AC_MSG_RESULT(no)
+	else
+		HASKTAGS="$withval"
+		AC_MSG_RESULT([using $HASKTAGS])
+	fi
+])
+AC_DEFINE_UNQUOTED(HASKTAGS, "$HASKTAGS", [Hasktags program.])
+AC_SUBST(HASKTAGS)
+
+dnl
 dnl for POSIX sort program.
 dnl
 AC_MSG_CHECKING(for POSIX sort program)
