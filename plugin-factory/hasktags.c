@@ -155,6 +155,22 @@ put_line(char *hasktags_x, const struct parser_param *param)
 	int lineno;
 	char *p, *tagname, *filename;
 
+	tagname = hasktags_x;
+
+	p = hasktags_x + (strlen(hasktags_x) - 1);
+	if (!isdigit((unsigned char)*p))
+		return;
+	while (p >= hasktags_x && isdigit((unsigned char)*p))
+		p--;
+	if (p < hasktags_x)
+		return;
+	lineno = atoi(p-- + 1);
+
+	while (p >= hasktags_x && *p-- != '$');
+	if (p < hasktags_x)
+		return;
+	*p-- = '\0';
+
 	filename = strstr(hasktags_x, param->file);
 	if (filename == NULL || filename == hasktags_x)
 		return;
@@ -165,24 +181,13 @@ put_line(char *hasktags_x, const struct parser_param *param)
 		*p-- = '\0';
 	if (p < hasktags_x)
 		return;
-	if (*p != '\0') {
-		if (!isspace((unsigned char)*p))
-			return;
-		*p = '\0';
-	}
 
-	tagname = hasktags_x;
-
-	p = hasktags_x + (strlen(hasktags_x) - 1);
-	if (!isdigit((unsigned char)*p))
+	p = filename + strlen(param->file);
+	while (isspace((unsigned char)*p))
+		*p++ = '\0';
+	if (*p++ != '/' && *p++ != '^')
 		return;
-	while (p >= hasktags_x && isdigit((unsigned char)*p))
-		p--;
-	if (p < hasktags_x)
-		return;
-	lineno = atoi(p + 1);
 
-	p = hasktags_x + (strlen(hasktags_x) - 1); // XX
 	param->put(PARSER_DEF, tagname, lineno, param->file, p, param->arg);
 }
 
