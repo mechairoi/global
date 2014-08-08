@@ -120,7 +120,8 @@ terminate_hasktags(void)
 	do {
 		ret = fclose(ip);
 	} while ((ret == -1) && (errno = EINTR));
-//	while (waitpid(pid, NULL, 0) < 0 && (errno = EINTR)) ;
+	while (waitpid(pid, NULL, 0) < 0 && (errno = EINTR))
+		;
 }
 
 static char *
